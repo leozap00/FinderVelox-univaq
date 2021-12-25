@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.util.Date;
 import java.util.Locale;
 
 @Entity(tableName = "autovelox")
-public class Autovelox {
+public class Autovelox  implements Serializable {
 
     public static Autovelox parseData(String[] parts) {
         try {

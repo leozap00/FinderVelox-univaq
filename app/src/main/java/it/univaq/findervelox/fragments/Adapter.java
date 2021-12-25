@@ -1,11 +1,13 @@
 package it.univaq.findervelox.fragments;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -52,7 +54,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
         @Override
         public void onClick(View view) {
-
+            Autovelox autovelox = data.get(getAdapterPosition());
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("autovelox", autovelox);
+            Navigation.findNavController(view).navigate(R.id.action_navList_to_detailActivity, bundle);
         }
 
         // TODO: 23/12/2021 Controllare il format di onBind 
