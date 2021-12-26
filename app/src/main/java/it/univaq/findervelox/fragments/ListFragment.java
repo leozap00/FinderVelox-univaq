@@ -57,6 +57,9 @@ public class ListFragment extends Fragment {
 
     private void download() {
         Requests.asyncRequest(new OnRequestListener() {
+
+            private DialogProgress dialog;
+
             @Override
             public void onRequestCompleted(byte[] data) {
                 if(data == null)
@@ -77,7 +80,11 @@ public class ListFragment extends Fragment {
                 }
 
                 ListFragment.this.data.addAll(list);
-                recyclerView.post(() -> adapter.notifyDataSetChanged());
+                recyclerView.post(() -> {
+                    if(dialog != null)
+                        dialog.dismiss();
+                    adapter.notifyDataSetChanged();
+                });
 
                 DB.getInstance(requireContext()).autoveloxDao().save(list);
 
@@ -87,6 +94,11 @@ public class ListFragment extends Fragment {
             @Override
             public void onRequestUpdate(int progress) {
 
+                if(dialog == null) {
+                    dialog = new DialogProgress();
+                    dialog.show(getChildFragmentManager(), "dialog-progress");
+                }
+                dialog.updatePRogress(progress);
             }
         });
     }

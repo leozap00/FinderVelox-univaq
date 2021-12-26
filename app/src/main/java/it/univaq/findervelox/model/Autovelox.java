@@ -7,10 +7,7 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Locale;
 
 @Entity(tableName = "autovelox")
 public class Autovelox  implements Serializable {
@@ -21,7 +18,6 @@ public class Autovelox  implements Serializable {
             autovelox.setCity(parts[0]);
             autovelox.setProvince(parts[1]);
             autovelox.setRegion(parts[2]);
-            autovelox.setYearInsertion(Integer.parseInt(parts[4]));
             autovelox.setDateTimeInsertion(convertToTimeStamp(parts[5]));
             autovelox.setLongitude(Double.parseDouble(parts[7].replace(",",".")));
             autovelox.setLatitude(Double.parseDouble(parts[8].replace(",",".")));
@@ -50,9 +46,7 @@ public class Autovelox  implements Serializable {
     private String city;
     private String province;
     private String region;
-    // TODO: 23/12/2021 E' possibile eliminare year insertion se è gia presente la data in date time insertion o meglio tenere entrambi? 
-    @ColumnInfo(name = "year_insertion")
-    private Integer yearInsertion;
+    // TODO: 23/12/2021 E' possibile eliminare year insertion se è gia presente la data in date time insertion o meglio tenere entrambi?
     @ColumnInfo(name = "date_time_insertion")
     private Date dateTimeInsertion;
     private double longitude;
@@ -90,20 +84,12 @@ public class Autovelox  implements Serializable {
         this.region = region;
     }
 
-    public Integer getYearInsertion() {
-        return yearInsertion;
-    }
-
-    public void setYearInsertion(Integer yearInsertion) {
-        yearInsertion = yearInsertion;
-    }
-
     public Date getDateTimeInsertion() {
         return dateTimeInsertion;
     }
 
     public void setDateTimeInsertion(Date dateTimeInsertion) {
-        dateTimeInsertion = dateTimeInsertion;
+        this.dateTimeInsertion = dateTimeInsertion;
     }
 
     public double getLongitude() {
@@ -121,4 +107,9 @@ public class Autovelox  implements Serializable {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
+
+    public String getInfoPosition() {
+        return latitude + ", " + longitude;
+    }
+
 }

@@ -50,7 +50,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Locati
             }
         }
     });
-    private LocationHelper locationHelper = new LocationHelper(requireContext(), launcher);
+    private LocationHelper locationHelper;
 
     @Nullable
     @Override
@@ -62,9 +62,17 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Locati
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        locationHelper = new LocationHelper(requireContext(), launcher);
+
         SupportMapFragment fragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.fragmentMap);
         if(fragment != null)
             fragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        locationHelper.stop(this);
     }
 
     @Override
