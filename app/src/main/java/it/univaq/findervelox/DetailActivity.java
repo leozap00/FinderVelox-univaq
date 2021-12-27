@@ -41,8 +41,8 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    private String convertTimestampToDate(Date timestamp) {
-        if(timestamp == null)
+    private String convertTimestampToDate(long timestamp) {
+        if(timestamp == -1)
             return "No date";
 
         SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

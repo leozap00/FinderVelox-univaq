@@ -26,7 +26,7 @@ public class Requests {
             if(connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 
                 InputStream in = connection.getInputStream();
-                int length = Integer.parseInt(connection.getHeaderField("content-length"));
+                int length = Integer.parseInt(connection.getHeaderField("Content-Length"));
 
                 byte[] data = new byte[length], buffer = new byte[1024];
                 int read, counter = 0;

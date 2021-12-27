@@ -79,6 +79,7 @@ public class ListFragment extends Fragment {
 
                 }
 
+
                 ListFragment.this.data.addAll(list);
                 recyclerView.post(() -> {
                     if(dialog != null)
