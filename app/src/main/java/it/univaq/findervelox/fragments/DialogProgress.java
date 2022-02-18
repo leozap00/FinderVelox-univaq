@@ -31,8 +31,7 @@ public class DialogProgress  extends DialogFragment {
         return dialog;
     }
 
-    public void updatePRogress(int progress) {
-
+    public void updateProgress(int progress) {
         if(progressBar != null) {
             progressBar.setProgress(progress);
             String text = progress + "%";

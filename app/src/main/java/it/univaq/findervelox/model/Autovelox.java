@@ -66,12 +66,11 @@ public class Autovelox  implements Serializable {
     }
 
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     private long id;
     private String city;
     private String province;
     private String region;
-    // TODO: 23/12/2021 E' possibile eliminare year insertion se è gia presente la data in date time insertion o meglio tenere entrambi?
     @ColumnInfo(name ="date_time_insertion")
     private long dateTimeInsertion;
     private double longitude;

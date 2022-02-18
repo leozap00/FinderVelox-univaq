@@ -10,6 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +21,7 @@ import it.univaq.findervelox.R;
 import it.univaq.findervelox.database.DB;
 import it.univaq.findervelox.model.Autovelox;
 import it.univaq.findervelox.utility.OnRequestListener;
+import it.univaq.findervelox.utility.Parser;
 import it.univaq.findervelox.utility.Pref;
 import it.univaq.findervelox.utility.Requests;
 
@@ -66,19 +71,18 @@ public class ListFragment extends Fragment {
                     return;
 
                 List<Autovelox> list = new ArrayList<>();
-                // TODO: 23/12/2021 Controllare come splittare le singole parti se json è del tipo {key:value,key:value,...}
-                String result = new String(data);
-                String[] lines = result.split("\r\n");
-                for(int i=0; i< lines.length; i++) {
-                    String line = lines[i];
-                    String[] parts = line.split(",");
+                try {
+                    JSONArray array = new JSONArray(data);
+                    if(data !=null){
+                        for(int i = 0; i < array.length(); i++) {
+                            JSONObject item = array.getJSONObject(i);
+                            Autovelox autovelox = Parser.parseAutovelox(item);
+                            if(autovelox != null) list.add(autovelox);
+                        }}
 
-                    Autovelox autovelox = Autovelox.parseData(parts);
-                    if(autovelox != null)
-                        list.add(autovelox);
-
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
 
                 ListFragment.this.data.addAll(list);
                 recyclerView.post(() -> {
@@ -99,7 +103,7 @@ public class ListFragment extends Fragment {
                     dialog = new DialogProgress();
                     dialog.show(getChildFragmentManager(), "dialog-progress");
                 }
-                dialog.updatePRogress(progress);
+                dialog.updateProgress(progress);
             }
         });
     }

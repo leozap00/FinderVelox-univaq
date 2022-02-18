@@ -110,6 +110,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Locati
         new Thread(() -> {
 
             LatLngBounds.Builder bounds = new LatLngBounds.Builder();
+            bounds.include(new LatLng(-34,151));
             List<Autovelox> autoveloxList = DB.getInstance(requireContext()).autoveloxDao().findAll();
             for(Autovelox autovelox : autoveloxList) {
                 Location l = new Location("autovelox");

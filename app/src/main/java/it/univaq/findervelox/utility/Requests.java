@@ -1,5 +1,9 @@
 package it.univaq.findervelox.utility;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -15,6 +19,7 @@ public class Requests {
         }).start();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private static byte[] doRequest(String method, String address, OnRequestListener listener) {
 
         HttpURLConnection connection = null;
@@ -26,16 +31,16 @@ public class Requests {
             if(connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 
                 InputStream in = connection.getInputStream();
-                int length = Integer.parseInt(connection.getHeaderField("Content-Length"));
+                long length = connection.getContentLengthLong();
 
-                byte[] data = new byte[length], buffer = new byte[1024];
+                byte[] data = new byte[(int) length], buffer = new byte[1024];
                 int read, counter = 0;
 
                 while((read = in.read(buffer)) != -1) {
                     System.arraycopy(buffer, 0, data, counter, read);
                     counter += read;
 
-                    int percentage = counter * 100 / length;
+                    int percentage = (int) (counter * 100 / length);
                     if(listener != null)
                         listener.onRequestUpdate(percentage);
                 }

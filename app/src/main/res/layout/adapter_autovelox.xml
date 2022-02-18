@@ -25,7 +25,8 @@
             android:clickable="true"
             android:focusable="true"
             android:orientation="vertical"
-            android:padding="4dp">
+            android:padding="4dp"
+            tools:ignore="TouchTargetSizeCheck">
 
             <TextView
                 android:id="@+id/textTitle"

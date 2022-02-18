@@ -57,10 +57,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
             Autovelox autovelox = data.get(getAdapterPosition());
             Bundle bundle = new Bundle();
             bundle.putSerializable("autovelox", autovelox);
+            if(autovelox.getLatitude() != -1 && autovelox.getLongitude() != -1) {
+                bundle.putDouble("latitude", autovelox.getLatitude());
+                bundle.putDouble("longitude", autovelox.getLongitude());
+            }
             Navigation.findNavController(view).navigate(R.id.action_navList_to_detailActivity, bundle);
         }
 
-        // TODO: 23/12/2021 Controllare il format di onBind 
+        // TODO: 23/12/2021 Controllare il format di onBind
         public void onBind(Autovelox autovelox) {
 
             title.setText(autovelox.getLongitude() + " " + autovelox.getLatitude());
